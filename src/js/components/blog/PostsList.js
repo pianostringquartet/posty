@@ -1,13 +1,12 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { updateAndViewCurrentPost } from 'actions/Actions'
-import ClickableList from 'utils/ClickableList'
+import { updateCurrentPost } from 'actions/Actions'
 
 import { List } from 'semantic-ui-react'
 
 const SemanticClickableList = ({items}) => (
-  <List>
+  <List relaxed size='large'>
     {items.map(item => (
       <List.Item
         key={item.displayable}
@@ -24,30 +23,18 @@ const PostsList = ({posts, actions}) => (
       posts.map(post => (
         {
           displayable: post.title,
-          callable: () => actions.updateAndViewCurrentPost(post.id)
+          callable: () => actions.updateCurrentPost(post.id)
         }))
     }
   />
 )
-
-// const PostsList = ({posts, actions}) => (
-//   <ClickableList
-//     items={
-//       posts.map(post => (
-//         {
-//           displayable: post.title,
-//           callable: () => actions.updateAndViewCurrentPost(post.id)
-//         }))
-//     }
-//   />
-// )
 
 const mapStateToProps = state => ({
   posts: state.blog.posts
 })
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({updateAndViewCurrentPost}, dispatch)
+  actions: bindActionCreators({updateCurrentPost}, dispatch)
 })
 
 export default connect(
