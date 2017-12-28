@@ -29,72 +29,6 @@ const store = createStore(
 // Initialize app
 store.dispatch(syncPosts())
 
-// OKAY, suppose you can dynamically generate one route per post title,
-// where
-
-// Right now, CurrentPost is injected with 'current post title, content'
-// from the STORE
-
-// So your ReadPost comp will instead take 'current post title, content' from
-// ah... but I'll only be injecting title via Route,
-// so I'll need to already have injected 'posts' from
-
-// const routes = store.
-
-// function select(state) {
-//   return state.some.deep.property
-// }
-
-// let currentValue
-// function handleChange() {
-//   let previousValue = currentValue
-//   currentValue = select(store.getState())
-
-//   if (previousValue !== currentValue) {
-//     console.log(
-//       'Some deep nested property changed from',
-//       previousValue,
-//       'to',
-//       currentValue
-//     )
-//   }
-// }
-
-// let unsubscribe = store.subscribe(handleChange)
-// unsubscribe()
-
-// const routes = [
-//   { path: '/',
-//     exact: true,
-//     sidebar: () => <div>home!</div>,
-//     main: () => <h2>Home</h2>
-//   },
-//   { path: '/bubblegum',
-//     sidebar: () => <div>bubblegum!</div>,
-//     main: () => <h2>Bubblegum</h2>
-//   },
-//   { path: '/shoelaces',
-//     sidebar: () => <div>shoelaces!</div>,
-//     main: () => <h2>Shoelaces</h2>
-//   }
-// ]
-
-// const routes = [
-//   { path: '/',
-//     exact: true,
-//     main: () => <PostyApp />
-//   },
-//   { path: '/:title',
-//     main: () => <ReadPost />
-//   }
-// ]
-
-// const routes = store.getState().blog.posts.map(post => (
-//   {
-//     path: '/' + post.title,
-//     main: () => <ReadPost/> // will be passed 'match' as long as we do component={route.main}
-//   }))
-
 // const PostyApp = () => (
 //   <NewBlogPanel />
 // )
@@ -121,23 +55,43 @@ const Hello = ({ match }) => (
 // like this:
 // http://localhost:8080/#/How to do an abstraction layer
 
-// also, how to
+// also, you run into trouble if you request a post that
+// hasn't been retrieved from the server yet
+// ... so it'd be good to show "loading"
+
+// can you do something like "dispatch sync",
+// so the app won't load at all until we've retrieved all the posts?
+
+// (why would that deal with the problem? bc we wouldn't process the route until
+//  we finished retrieving the )
+
+// some workarounds:
+//    use a one-word post title 'identifier' for a given post,
+//      e.g. so you have both
+// or, just use post's id? (for now it doesn't matter the exact)
+
+// another workaround: keeping using React Router etc.,
+//  but just host 'How to do an abstraction layer' locally?
+//
+
 function Life ({ match }) {
   console.log('Life: match.params.title: ' + match.params.title)
   return (<ReadPost title={match.params.title} />)
 }
 
-const Main = () => (
-  <Switch>
+function Main () {
+  console.log('Main called')
+  return (<Switch>
     <Route exact path='/' component={Hello} />
     <Route path='/:title' component={Life} />
-  </Switch>
+  </Switch>)
+}
 
-  )
+// just don't make the app crash when they request a post
+// that not been loaded yet!
 
 function PostyApp ({match}) {
-  console.log('match in PostyApp: ' + match)
-  // console.log('match.params.title in PostyApp: ' + match.params.title)
+  console.log('waiting until async request is done')
   return (
     <span>
       <PostsList />
