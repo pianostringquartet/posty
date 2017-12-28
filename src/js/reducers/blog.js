@@ -1,6 +1,7 @@
 import { ADD_POST,
          TOGGLE_READING,
          UPDATE_CURRENT_POST,
+         UPDATE_CURRENT_POST_BY_TITLE,
          REFRESH_CURRENT_POST } from 'constants/ActionTypes'
 
 var _ = require('lodash/core')
@@ -9,13 +10,13 @@ const initialBlogState = {
   isReading: false,
   currentPost: {
     id: 0,
-    title: 'The Lived Experience of Programming',
+    title: 'life',
     content: 'Programming is an experience.'
   },
   posts: [
     {
       id: 0,
-      title: 'The Lived Experience of Programming',
+      title: 'life',
       content: 'Programming is an experience.'
     }
   ]
@@ -45,6 +46,14 @@ export default function posts (state = initialBlogState, action) {
             content: action.content
           }
         ]
+      })
+
+    case UPDATE_CURRENT_POST_BY_TITLE:
+      const newCurrentPostByTitle = state.posts.filter(post =>
+        post.title === action.title)[0]
+      console.log('newCurrentPostByTitle is: ' + newCurrentPostByTitle)
+      return Object.assign({}, state, {
+        currentPost: newCurrentPost
       })
 
     case UPDATE_CURRENT_POST:

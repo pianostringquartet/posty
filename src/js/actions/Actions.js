@@ -22,11 +22,18 @@ export const updateCurrentPost = (id) => (
   }
 )
 
-export const updateAndViewCurrentPost = (id) =>
-  function (dispatch) {
-    dispatch(updateCurrentPost(id))
-    // dispatch(toggleReading())
+export const updateCurrentPostByTitle = (title) => (
+  {
+    type: ActionTypes.UPDATE_CURRENT_POST_BY_TITLE,
+    title: title
   }
+)
+
+// export const updateAndViewCurrentPost = (id) =>
+//   function (dispatch) {
+//     dispatch(updateCurrentPost(id))
+//     // dispatch(toggleReading())
+//   }
 
 /*
 "Synchronizing posts":

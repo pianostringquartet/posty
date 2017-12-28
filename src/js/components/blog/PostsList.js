@@ -5,6 +5,15 @@ import { updateCurrentPost } from 'actions/Actions'
 
 import { List } from 'semantic-ui-react'
 
+import CurrentPost from 'components/blog/CurrentPost'
+import ReadPost from 'components/blog/ReadPost'
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+
 const SemanticClickableList = ({items}) => (
   <List relaxed size='large'>
     {items.map(item => (
@@ -17,16 +26,26 @@ const SemanticClickableList = ({items}) => (
   </List>
 )
 
+// const PostsList = ({posts, actions}) => (
+//   <SemanticClickableList
+//     items={
+//       posts.map(post => (
+//         {
+//           displayable: post.title,
+//           callable: () => actions.updateCurrentPost(post.id)
+//         }))
+//     }
+//   />
+// )
+
 const PostsList = ({posts, actions}) => (
-  <SemanticClickableList
-    items={
-      posts.map(post => (
-        {
-          displayable: post.title,
-          callable: () => actions.updateCurrentPost(post.id)
-        }))
-    }
-  />
+  <List>
+    {posts.map(post =>
+      <List.Item key={Math.random()}>
+        <Link to={'/' + post.title}>{post.title} </Link>
+      </List.Item>
+    )}
+  </List>
 )
 
 const mapStateToProps = state => ({

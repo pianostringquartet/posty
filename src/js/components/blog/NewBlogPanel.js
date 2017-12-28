@@ -35,11 +35,11 @@ const NewBlogPanel = ({actions}) => (
       <SideBar />
     </Grid.Column>
 
-    <Grid.Column>
-      <CurrentPost />
-    </Grid.Column>
-
   </Grid>
 )
+
+   // <Grid.Column>
+  //    <CurrentPost />
+   // </Grid.Column>
 
 export default NewBlogPanel
