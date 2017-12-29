@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Header } from 'semantic-ui-react'
 import { updateCurrentPostByTitle } from 'actions/Actions'
 import { withRouter } from 'react-router-dom'
+import { toPostTitleStr } from '../utils'
 
 var marked = require('marked')
 
@@ -16,8 +17,11 @@ const ShowPostContent = post => (
     : <Header color='teal'> Retrieving... </Header>
   )
 
-function ReadPost ({posts, title}) {
+function ReadPost ({posts, match}) {
+  let title = toPostTitleStr(match.params.title)
+
   let urlPost = posts.filter(post => post.title === title)[0]
+
   return (
     <div>
       <Header color='orange' as='h1'> {title} </Header>
@@ -29,4 +33,4 @@ const mapStateToProps = state => ({
   posts: state.blog.posts
 })
 
-export default withRouter(connect(mapStateToProps, null)(ReadPost))
+export default connect(mapStateToProps, null)(ReadPost)
