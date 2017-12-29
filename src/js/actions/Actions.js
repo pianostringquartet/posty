@@ -1,48 +1,47 @@
 import * as ActionTypes from 'constants/ActionTypes'
 
 // Connecting to Firebase Database and Storage
-// (See index.html for Firebase import.)
+// (See public/index.html for Firebase import.)
 const storageURL = 'gs://posty-blog-app.appspot.com'
 const databasePosts = firebase.database().ref('posts/')
 const storagePosts = firebase.storage().refFromURL(storageURL)
 
-export const addPost = ({id, title, content}) => (
+/*
+"Retrieving posts":
+  All posts are persisted on Firebase.
+  We store a post's title etc. in Firebase Database
+  and its MarkDown files in Firebase Storage.
+
+  TODO:
+  Break into smaller, more comprehensible and readable steps;
+  Currently too much Firebase-specific code,
+    and code flows in response to .then/.catch constraints,
+    not the inherent logic of what we're doing.
+*/
+const addPost = (post, postFile) => (
   {
     type: ActionTypes.ADD_POST,
-    id: id,
-    title: title,
-    content: content
+    id: post.id,
+    title: post.title,
+    content: postFile
   }
 )
 
-/*
-"Synchronizing posts":
-  Retrieving posts from Firebase Database and Storage.
-*/
-const getPostStorageURL = (postFilename, storageRef) =>
+// get post's MarkDown file
+const retrievePostFile = (postFilename, storageRef) =>
   storageRef.child(postFilename).getDownloadURL()
+    .then(postURL => fetch(postURL)
+      .then(response => response.text()))
 
-const retrievePostFile = postStorageURL =>
-  fetch(postStorageURL).then(response => response.text())
-
-// TODO:
-// Break into smaller, more comprehensible and readable steps
-export const retrieveAndAddPost = post =>
+const retrieveAndAddPost = post =>
   dispatch =>
-    getPostStorageURL(post.filename, storagePosts)
-      .then(urlPromise => (retrievePostFile(urlPromise)
-        .then(postMarkdownFile =>
-          dispatch(addPost({id: post.id, title: post.title, content: postMarkdownFile}))
-        )
-      )
-    )
+    retrievePostFile(post.filename, storagePosts)
+      .then(postFile => dispatch(addPost(post, postFile)))
 
-export const syncPosts = () =>
+export const retrievePosts = () =>
   dispatch =>
-    databasePosts.on('value',
-      function (databaseSnapshot) {
-        const posts = Object.values(databaseSnapshot.val())
-        posts.map(post => (
-          dispatch(retrieveAndAddPost(post))))
-      }
-    )
+    databasePosts.on( // establish Firebase Database listener
+      'value',
+      databaseSnapshot =>
+        Object.values(databaseSnapshot.val()) // posts
+          .map(post => dispatch(retrieveAndAddPost(post))))

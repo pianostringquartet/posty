@@ -5,9 +5,9 @@ import { render } from 'react-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from 'reducers'
-import { HashRouter, Route, Switch, Link } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 
-import { syncPosts } from 'actions/Actions'
+import { retrievePosts } from 'actions/Actions'
 
 import Blog from 'components/Blog'
 
@@ -19,7 +19,7 @@ const store = createStore(
 )
 
 // Initialize app
-store.dispatch(syncPosts())
+store.dispatch(retrievePosts())
 
 render(
   <Provider store={store}>

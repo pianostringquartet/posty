@@ -2,30 +2,36 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Header } from 'semantic-ui-react'
-import { updateCurrentPostByTitle } from 'actions/Actions'
-import { withRouter } from 'react-router-dom'
+import marked from 'marked'
 import { toPostTitleStr } from '../utils'
 
-var marked = require('marked')
+const DEFAULT_POST_TITLE = 'life is good'
 
 const createMarkup = (text) => (
   {__html: marked(text, {sanitize: true})})
 
-const ShowPostContent = post => (
+// TODO:
+// Add logic (e.g. timeout?) for when post doesn't exist
+const DisplayPostContent = post => (
   post
     ? <span dangerouslySetInnerHTML={createMarkup(post.content)} />
-    : <Header color='teal'> Retrieving... </Header>
+    // post either does not exist
+    // or has not yet been loaded from Firebase
+    : <Header color='teal'> Looking for post... </Header>
   )
 
-function ReadPost ({posts, match}) {
-  let title = toPostTitleStr(match.params.title)
+function ReadPost ({posts, match, defaultPost}) {
+  let title =
+    defaultPost
+    ? DEFAULT_POST_TITLE
+    : toPostTitleStr(match.params.title)
 
-  let urlPost = posts.filter(post => post.title === title)[0]
+  let post = posts.filter(post => post.title === title)[0]
 
   return (
     <div>
       <Header color='orange' as='h1'> {title} </Header>
-      {ShowPostContent(urlPost)}
+      {DisplayPostContent(post)}
     </div>)
 }
 

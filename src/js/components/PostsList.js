@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import { List } from 'semantic-ui-react'
 import { toURLSafeStr } from '../utils'
 
-// <Link to={'/' + post.title}>
 const PostsList = ({ posts }) => (
   <List relaxed size='large'>
     {posts.map((post, index) =>
