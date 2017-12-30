@@ -10,13 +10,14 @@ const DEFAULT_POST_TITLE = 'life is good'
 const createMarkup = (text) => (
   {__html: marked(text, {sanitize: true})})
 
-// TODO:
-// Add logic (e.g. timeout?) for when post doesn't exist
+/* TODO:
+    Add logic (e.g. timeout?) for when post doesn't exist,
+    (as opposed to when post just hasn't been loaded from Firebase yet).
+*/
 const DisplayPostContent = post => (
   post
     ? <span dangerouslySetInnerHTML={createMarkup(post.content)} />
-    // post either does not exist
-    // or has not yet been loaded from Firebase
+    // i.e. post either not yet loaded from Firebase or doesn't exist.
     : <Header color='teal'> Looking for post... </Header>
   )
 

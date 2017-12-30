@@ -1,31 +1,25 @@
-import { reduce } from 'lodash'
+// import { reduce } from 'lodash'
+import { last } from 'lodash'
 import { ADD_POST } from 'constants/ActionTypes'
 
 const initialBlogState = {
   posts: [
     {
       id: 0,
-      title: 'life is good',
+      title: 'The Lived Experience of Programming',
       content: 'Programming is an experience.'
     }
   ]
 }
 
-// Object list -> Int
-const newMaxId = posts => (
-  1 + reduce(posts,
-              (maxId, post) => Math.max(post.id, maxId),
-              -1)
-)
-
-export default function posts (state = initialBlogState, action) {
+export default function blog (state = initialBlogState, action) {
   switch (action.type) {
     case ADD_POST:
       return Object.assign({}, state, {
         posts: [
           ...state.posts,
           {
-            id: newMaxId(state.posts),
+            id: last(state.posts).id + 1,
             title: action.title,
             content: action.content
           }

@@ -1,22 +1,23 @@
 import * as ActionTypes from 'constants/ActionTypes'
 
-// Connecting to Firebase Database and Storage
-// (See public/index.html for Firebase import.)
-const storageURL = 'gs://posty-blog-app.appspot.com'
+/*
+Firebase
+(See public/index.html for Firebase imports.)
+*/
 const databasePosts = firebase.database().ref('posts/')
+const storageURL = 'gs://posty-blog-app.appspot.com'
 const storagePosts = firebase.storage().refFromURL(storageURL)
 
 /*
 "Retrieving posts":
   All posts are persisted on Firebase.
-  We store a post's title etc. in Firebase Database
+  We store a post's title, filename etc. in Firebase Database
   and its MarkDown files in Firebase Storage.
 
   TODO:
-  Break into smaller, more comprehensible and readable steps;
-  Currently too much Firebase-specific code,
-    and code flows in response to .then/.catch constraints,
-    not the inherent logic of what we're doing.
+  - Abstract away Firebase-specific code,
+  - Make more declarative,
+  - Add .catch logic for error handling in Promises
 */
 const addPost = (post, postFile) => (
   {
@@ -40,8 +41,8 @@ const retrieveAndAddPost = post =>
 
 export const retrievePosts = () =>
   dispatch =>
-    databasePosts.on( // establish Firebase Database listener
-      'value',
+    databasePosts.on(
+      'value', // establish Firebase Database listener
       databaseSnapshot =>
         Object.values(databaseSnapshot.val()) // posts
           .map(post => dispatch(retrieveAndAddPost(post))))

@@ -6,9 +6,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from 'reducers'
 import { HashRouter } from 'react-router-dom'
-
 import { retrievePosts } from 'actions/Actions'
-
 import Blog from 'components/Blog'
 
 const store = createStore(
@@ -18,7 +16,7 @@ const store = createStore(
     window.devToolsExtension ? window.devToolsExtension() : f => f)
 )
 
-// Initialize app
+// Initialize app:
 store.dispatch(retrievePosts())
 
 render(

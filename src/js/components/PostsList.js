@@ -7,8 +7,8 @@ import { toURLSafeStr } from '../utils'
 
 const PostsList = ({ posts }) => (
   <List relaxed size='large'>
-    {posts.map((post, index) =>
-      <List.Item key={index}>
+    {posts.map(post =>
+      <List.Item key={post.id}>
         <Link to={'/' + toURLSafeStr(post.title)}>
           {post.title}
         </Link>
