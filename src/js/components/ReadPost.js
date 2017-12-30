@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 import { Header } from 'semantic-ui-react'
 import marked from 'marked'
 import { toPostTitleStr } from '../utils'
-
-const DEFAULT_POST_TITLE = 'life is good'
+import { DEFAULT_POST_TITLE } from 'reducers/blog'
 
 const createMarkup = (text) => (
   {__html: marked(text, {sanitize: true})})

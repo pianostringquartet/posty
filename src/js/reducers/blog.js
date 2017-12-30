@@ -2,12 +2,14 @@
 import { last } from 'lodash'
 import { ADD_POST } from 'constants/ActionTypes'
 
-const initialBlogState = {
+export const DEFAULT_POST_TITLE = 'The Lived Experience of Programming'
+
+export const initialBlogState = {
   posts: [
     {
       id: 0,
-      title: 'The Lived Experience of Programming',
-      content: 'Programming is an experience.'
+      title: DEFAULT_POST_TITLE,
+      content: 'Programming is an experience. This blog focuses on the lived experience of programming -- the thoughts a construct allows you to think.'
     }
   ]
 }
