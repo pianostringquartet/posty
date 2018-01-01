@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Icon, Header, Segment } from 'semantic-ui-react'
 import PostsList from 'components/PostsList'
 
-const personalSiteURL = 'https://sitey-app.firebaseapp.com/'
+const personalSiteURL = 'https://chrisclampitt.life/'
 
 const ToPersonalSiteButton = () =>
   <Button color='green' onClick={() => window.open(personalSiteURL)}>
