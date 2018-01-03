@@ -7,7 +7,14 @@ import { toPostTitleStr } from '../utils'
 import { DEFAULT_POST_TITLE } from 'reducers/blog'
 
 const createMarkup = (text) => (
-  {__html: marked(text, {sanitize: true})})
+  {__html:
+      marked(text,
+        {sanitize: true,
+          highlight: code => require('highlight.js').highlightAuto(code).value,
+          langPrefix: 'hljs '
+        }
+      )
+  })
 
 /* TODO:
     Add logic (e.g. timeout?) for when post doesn't exist,
@@ -15,7 +22,10 @@ const createMarkup = (text) => (
 */
 const DisplayPostContent = post => (
   post
-    ? <span dangerouslySetInnerHTML={createMarkup(post.content)} />
+    ? <span>
+      <span dangerouslySetInnerHTML={createMarkup(post.content)} />
+      <br /> <br />
+    </span>
     // i.e. post either not yet loaded from Firebase or doesn't exist.
     : <Header color='teal'> Looking for post... </Header>
   )

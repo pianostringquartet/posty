@@ -7,11 +7,11 @@ import ReadPost from 'components/ReadPost'
 import Sidebar from 'components/Sidebar'
 
 const Blog = () => (
-  <Grid container centered stackable columns={2} padded>
+  <Grid container stackable columns={2} padded>
     <Grid.Column width={4}>
       <Sidebar />
     </Grid.Column>
-    <Grid.Column>
+    <Grid.Column width={12}>
       <Switch>
         {/* Links declared in PostsList */}
         <Route
