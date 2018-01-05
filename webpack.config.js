@@ -49,10 +49,11 @@ module.exports = {
     modules: ['src/js', 'node_modules'],
     extensions: ['.jsx', '.js'],
     alias: {
-      actions: path.resolve(__dirname, 'src', 'js', 'actions'),
-      constants: path.resolve(__dirname, 'src', 'js', 'constants'),
-      reducers: path.resolve(__dirname, 'src', 'js', 'reducers'),
-      components: path.resolve(__dirname, 'src', 'js', 'components')
+      actions: path.resolve(paths.JS, 'actions'),
+      constants: path.resolve(paths.JS, 'constants'),
+      reducers: path.resolve(paths.JS, 'reducers'),
+      components: path.resolve(paths.JS, 'components'),
+      assets: path.resolve(paths.PUBLIC, 'assets')
     }
   }
 }
