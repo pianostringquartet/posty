@@ -2,7 +2,7 @@
 
 A blog and personal site platform. Built with React + Redux.
 
-[Come hang out with posty.](https://posty-blog-app.firebaseapp.com/)
+[Come hang out with posty.](https://chrisclampittblog.life/)
 
 ## License
 
